@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mapper.MyPageMapper">
+	<select id="selectDual" parameterType="String" resultType="String">
+		<![CDATA[
+		/* mapper.MyPageMapper.selectDual */
+		SELECT TO_CHAR(SYSDATE) FROM DUAL
+		]]>
+	</select>
+	
+	<select id="selectUser" parameterType="MyPageVo" resultType="MyPageVo">
+		/* mapper.MyPageMapper.selectUser */
+		SELECT
+			  SEQ
+			, ID
+			, PW
+			, NAME
+		FROM USERS
+		WHERE ID = #{id}
+		<if test='pw != null and pw != ""'>
+		AND PW = #{pw}
+		</if>
+		
+	</select>
+	
+</mapper>
