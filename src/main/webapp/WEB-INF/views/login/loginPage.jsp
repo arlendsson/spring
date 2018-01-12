@@ -18,7 +18,7 @@ $(document).ready(function () {
 	$("#testBtn").click(function () {
 		$.ajax({
 			url : '/mypage/ajax/data'
-			, data : $("#myForm").serialize()
+			, data : $("#form").serialize()
 			, processData : false
 			, type : 'POST'
 			//, dataType : 'application/json'
@@ -37,8 +37,8 @@ $(document).ready(function () {
 	
 	$("#loginBtn").click(function () {
 		/* 안됨
-		var myForm = document.getElementById('myForm');
-		var formData = new FormData(myForm);
+		var form = document.getElementById('form');
+		var formData = new FormData(form);
 		var formData = new FormData();
 		formData.append('id', 'tete');
 		formData.append('pw', 'zzzzzz');
@@ -46,7 +46,7 @@ $(document).ready(function () {
 		
 		$.ajax({
 			url : '/login/login'
-			, data : $("#myForm").serialize()
+			, data : $("#form").serialize()
 			, processData : false
 			, type : 'POST'
 			, success : function (result) {
@@ -62,7 +62,7 @@ $(document).ready(function () {
 
 </script>
 
-<form id="myForm" name="myForm">
+<form id="form" name="form">
 	<div class="row">
 	<input type="text" class="form-control" placeholder="" id="name" name="name" value="" />
 	</div>

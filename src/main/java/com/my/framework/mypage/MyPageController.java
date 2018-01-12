@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "/mypage")
 public class MyPageController {
+	
 	private Logger log = LoggerFactory.getLogger(MyPageController.class);
 	
 	@Resource(name = "configuration")

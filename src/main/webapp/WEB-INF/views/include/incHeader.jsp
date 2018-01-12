@@ -1,8 +1,11 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+
 <c:set var="contextPath" value="<%=request.getContextPath()%>"></c:set>
+<c:set var="requestURI" value="<%=request.getRequestURI()%>"></c:set>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -36,27 +39,19 @@
 
 <title>코딩</title>
 
-<script type="text/javascript">
-$(function () {
-	$(".nav nav-tabs > li").click(function () {
-		$(".nav nav-tabs > li").each(function () {
-			$(this).removeClass("active");
-		});
-		$(this).addClass("active");
-	});
-});
-</script>
-
 </head>
 <body>
 
-<ul class="nav nav-tabs">
-	<%-- <li role="presentation" class="active"><a href="<c:out value="${contextPath }" />/login/loginPage">Home</a></li>
-	<li role="presentation"><a href="<c:out value="${contextPath }" />/mypage/myPage">My Page</a></li>
-	<li role="presentation"><a href="<c:out value="${contextPath }" />/board/boardList">Board</a></li> --%>
-	<li role="presentation" class="active"><a href="#">Home</a></li>
-	<li role="presentation"><a href="#">My Page</a></li>
-	<li role="presentation"><a href="#">Board</a></li>
+<ul class="nav nav-tabs" id="menuBar">
+	<li role="presentation" <c:if test="${fn:indexOf(requestURI, 'loginPage') }"> class="active"</c:if>>
+		<a href="<c:out value="${contextPath }" />/login/loginPage">Home</a>
+	</li>
+	<li role="presentation" <c:if test="${fn:indexOf(requestURI, 'myPage') }"> class="active"</c:if>>
+		<a href="<c:out value="${contextPath }" />/mypage/myPage">My Page</a>
+	</li>
+	<li role="presentation" <c:if test="${fn:indexOf(requestURI, 'boardList') }"> class="active"</c:if>>
+		<a href="<c:out value="${contextPath }" />/board/boardList">Board</a>
+	</li>
 </ul>
 
 <div id="contents" style="width: 100%;">
