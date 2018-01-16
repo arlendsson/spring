@@ -4,17 +4,17 @@
 <%@include file="/WEB-INF/views/include/incHeader.jsp" %>
 
 <script type="text/javascript">
-// 스프링 시큐리티 403 오류
-$(function () {
-	var header = $("meta[name='_csrf_header']").attr("content");
-	var token = $("meta[name='_csrf']").attr("content");
-	$(document).ajaxSend(function(e, xhr, options) {
-		xhr.setRequestHeader(header, token);
-		xhr.setRequestHeader("AJAX", true);
-	});
-});
+var hasId = function() {
+	var id = $.cookie('id');
+	if (id != null && id != '') {
+		$("#id").val($.cookie('id'));
+		$("#rememberChk").prop("checked", true);
+	}
+}
 
 $(document).ready(function () {
+	hasId();
+
 	$("#testBtn").click(function () {
 		$.ajax({
 			url : '/mypage/ajax/data'
@@ -34,16 +34,19 @@ $(document).ready(function () {
 			}
 		});
 	});
-	
+
+	var rememberId = function() {
+		if ($("#rememberChk").prop("checked")) {
+			$.cookie('id', $("#id").val(), { expires: 7, path: '/login/loginPage'/* , domain: '' */, secure: false });
+		} else {
+			$.cookie('id', '');
+			$.cookie('id', '', { expires: -1, path: '/login/loginPage' });
+		}
+	}
+
 	$("#loginBtn").click(function () {
-		/* 안됨
-		var form = document.getElementById('form');
-		var formData = new FormData(form);
-		var formData = new FormData();
-		formData.append('id', 'tete');
-		formData.append('pw', 'zzzzzz');
-		 */
-		
+		rememberId();
+
 		$.ajax({
 			url : '/login/login'
 			, data : $("#form").serialize()
@@ -52,49 +55,49 @@ $(document).ready(function () {
 			, success : function (result) {
 				var data = JSON.parse(result);
 				if (data.success) {
-					$("#name").val(data.loginUser.name);
+					location.href = '/mypage/myPage';
+				} else {
+					alert("로그인 실패");
 				}
-				//location.href = '/mypage/myPage';
 			}
 		});
 	});
+
+	$("#rememberChk").click(function () {
+		rememberId();
+	});
+
 });
 
 </script>
 
-<form id="form" name="form">
-	<div class="row">
-	<input type="text" class="form-control" placeholder="" id="name" name="name" value="" />
+<form class="form-horizontal" id="form">
+	<div class="form-group">
+	  <label for="inputEmail3" class="col-sm-2 control-label">아이디</label>
+	  <div class="col-sm-10">
+	    <input type="text" class="form-control" id="id" name="id" placeholder="아이디 입력">
+	  </div>
 	</div>
-	
-	<div class="row">
-		<div class="col-lg-6">
-			<div class="input-group">
-				<span class="input-group-btn">
-					<button class="btn btn-default" type="button">&nbsp;&nbsp;&nbsp;</button>
-				</span>
-				<input type="text" class="form-control" placeholder="아이디 입력" id="id" name="id" value="test" />
-			</div>
-			<!-- /input-group -->
-		</div>
-		<!-- /.col-lg-6 -->
-		<div class="col-lg-6">
-			<div class="input-group">
-				<span class="input-group-btn">
-					<button class="btn btn-default" type="button">&nbsp;&nbsp;&nbsp;</button>
-				</span>
-				<input type="password" class="form-control" placeholder="패스워드 입력" id="pw" name="pw" value="1234" />
-				<span class="input-group-btn">
-					<button class="btn btn-default" type="button" id="loginBtn">Go!</button>
-				</span>
-			</div>
-			<!-- /input-group -->
-		</div>
-		<!-- /.col-lg-6 -->
+	<div class="form-group">
+	  <label for="inputPassword3" class="col-sm-2 control-label">패스워드</label>
+	  <div class="col-sm-10">
+	    <input type="password" class="form-control" id="pw" name="pw" placeholder="패스워드 입력">
+	  </div>
 	</div>
-	<!-- /.row -->
-	
-	<button class="" type="button" id="testBtn">ajax test</button>
+	<div class="form-group">
+	  <div class="col-sm-offset-2 col-sm-10">
+	    <div class="checkbox">
+	      <label>
+	        <input type="checkbox" id="rememberChk"> Remember me
+	      </label>
+	    </div>
+	  </div>
+	</div>
+	<div class="form-group">
+	  <div class="col-sm-offset-2 col-sm-10">
+	    <button class="btn btn-default" type="button" id="loginBtn">로그인</button>
+	  </div>
+	</div>
 </form>
 
 <%@include file="/WEB-INF/views/include/incFooter.jsp" %>
