@@ -3,6 +3,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <c:set var="contextPath" value="<%=request.getContextPath()%>"></c:set>
 <c:set var="requestURI" value="<%=request.getRequestURI()%>"></c:set>
@@ -37,20 +38,56 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+<!-- 쿠키 -->
+<script src="<c:out value="${contextPath }" />/resources/js/jquery.cookie.js"></script>
+
+<script type="text/javascript">
+// 스프링 시큐리티 403 오류
+$(function () {
+	var header = $("meta[name='_csrf_header']").attr("content");
+	var token = $("meta[name='_csrf']").attr("content");
+
+	$(document).ajaxSend(function(e, xhr, options) {
+		xhr.setRequestHeader(header, token);
+		xhr.setRequestHeader("AJAX", true);
+	});
+});
+</script>
+
+<style type="text/css">
+#titleBar li {	display: inline;	width:50%;	}
+</style>
+
 <title>코딩</title>
 
 </head>
 <body>
+<ul class="nav nav-tabs" id="titleBar">
+	<li class="bg-primary">
+		<h4>코딩 연습</h4>
+	</li>
+	<c:if test="${sessionScope.loginUser != null }">
+	<li class="bg-primary">
+		<h4><c:out value="${sessionScope.loginUser.name }" /> 님</h4>
+	</li>
+	</c:if>
+</ul>
 
 <ul class="nav nav-tabs" id="menuBar">
-	<li role="presentation" <c:if test="${fn:indexOf(requestURI, 'loginPage') }"> class="active"</c:if>>
-		<a href="<c:out value="${contextPath }" />/login/loginPage">Home</a>
-	</li>
-	<li role="presentation" <c:if test="${fn:indexOf(requestURI, 'myPage') }"> class="active"</c:if>>
+	<c:if test="${sessionScope.loginUser == null }">
+		<li role="presentation" <c:if test="${fn:indexOf(requestURI, 'loginPage') > -1 }"> class="active"</c:if>>
+			<a href="<c:out value="${contextPath }" />/login/loginPage">Home</a>
+		</li>
+	</c:if>
+
+	<c:if test="${sessionScope.loginUser != null }">
+		<li role="presentation" <c:if test="${fn:indexOf(requestURI, 'home') > -1 }"> class="active"</c:if>>
+			<a href="<c:out value="${contextPath }" />/home/home">Home</a>
+		</li>
+	</c:if>
+
+	<li role="presentation" <c:if test="${fn:indexOf(requestURI, 'myPage') > -1 }"> class="active"</c:if>>
 		<a href="<c:out value="${contextPath }" />/mypage/myPage">My Page</a>
-	</li>
-	<li role="presentation" <c:if test="${fn:indexOf(requestURI, 'boardList') }"> class="active"</c:if>>
-		<a href="<c:out value="${contextPath }" />/board/boardList">Board</a>
 	</li>
 </ul>
 
