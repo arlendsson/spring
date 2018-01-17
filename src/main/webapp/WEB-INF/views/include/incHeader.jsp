@@ -41,6 +41,13 @@
 <!-- 쿠키 -->
 <script src="<c:out value="${contextPath }" />/resources/js/jquery.cookie.js"></script>
 
+<!-- websocket -->
+<script src="<c:out value="${contextPath }" />/resources/js/sockjs.js"></script>
+
+<!-- charts -->
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+
 <script type="text/javascript">
 // 스프링 시큐리티 403 오류
 $(function () {

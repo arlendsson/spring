@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 
 	private Logger log = LoggerFactory.getLogger(HomeController.class);
-	
+
 	@RequestMapping(value = "/home")
 	public String home(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		log.debug("########## " + request.getRequestURI());
-		return "home/home";
+		return "home/homeChart";
 	}
-	
+
 }
