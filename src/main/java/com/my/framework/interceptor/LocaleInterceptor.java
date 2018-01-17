@@ -24,7 +24,7 @@ public class LocaleInterceptor extends HandlerInterceptorAdapter {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 
-		log.debug("########## LocaleInterceptor");
+//		log.debug("########## LocaleInterceptor");
 
 		HttpSession session = request.getSession();
 

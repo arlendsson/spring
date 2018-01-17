@@ -20,17 +20,17 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 
-		log.debug("########## LoginInterceptor");
+//		log.debug("########## LoginInterceptor");
 
 		HttpSession session = request.getSession();
 
 		CustomUserDetails loginUser = (CustomUserDetails) session.getAttribute("loginUser");
-		
+
 		if (loginUser == null || StringUtils.isEmpty(loginUser.getId())) {
 			throw new SessionException("session expired.");
 		}
 
 		return true;
-		
+
 	}
 }
