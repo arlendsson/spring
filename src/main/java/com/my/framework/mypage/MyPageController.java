@@ -106,6 +106,7 @@ public class MyPageController {
 		log.debug("########## " + request.getRequestURI());
 		log.debug("########## 1: " + param.toString());
 
+		param.setRegId(SessionUtil.getLoginUser(request.getSession()).getId());
 		param.setModId(SessionUtil.getLoginUser(request.getSession()).getId());
 
 		service.updateBoard(param);
