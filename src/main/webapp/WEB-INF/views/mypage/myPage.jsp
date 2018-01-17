@@ -7,14 +7,20 @@
 $(document).ready(function() {
 
 	$("#saveBtn").click(function() {
+		var saveUrl = "/mypage/ajax/insertBoard";
+		if ($("#seq").val() != null && $("#seq").val() != '') {
+			saveUrl = "/mypage/ajax/updateBoard";
+		}
+
 		$.ajax({
-			url : '/mypage/ajax/insertBoard'
+			url : saveUrl
 			, data : $("#boardForm").serialize()
 			, processData : false
 			, type : 'POST'
 			, success : function (result) {
 				alert(JSON.stringify(result));
 				var data = JSON.parse(result);
+				location.href = "/mypage/myPage";
 			}
 		});
 	});
@@ -30,12 +36,43 @@ var goPage = function(page) {
 var modBoard = function(seq) {
 	$("#seq").val(seq);
 	$("#title").val($("#title" + seq).val());
-	$("#content").text("#content" + seq).text());
+	$("#content").text($("#content" + seq).text());
 }
 </script>
 
+
+<script type="text/javascript">
+//http://nowonbun.tistory.com/285
+var webSocket = new WebSocket("ws://localhost/websocketTest");
+var messageTextArea = document.getElementById("messageTextArea");
+webSocket.onopen = function(message) {
+	$("#messageTextArea").append("server connect...\n");
+};
+webSocket.onclose = function(message) {
+	$("#messageTextArea").append("server disconnect...\n");
+};
+webSocket.onerror = function(message) {
+	$("#messageTextArea").append("error...\n");
+};
+webSocket.onmessage = function(message) {
+	$("#messageTextArea").append("recieve from server => " + message.data + "\n");
+};
+function sendMessage() {
+	var message = document.getElementById("textMessage");
+	$("#messageTextArea").append("send to server => " + $("#textMessage").val() + "\n");
+	webSocket.send(message.value);
+	$("#messageTextArea").text("");
+}
+</script>
+
+
 <form:form id="boardForm">
-	<input type="text" id="seq" name="seq" value="${boardVo.seq }" />
+	<div>
+		<textarea id="messageTextArea" style="width: 100%;"></textarea>
+		<br />
+		<input type="text" id="textMessage" style="width: 75%;" />
+		<button type="button" id="wsBtn" onclick="javascript:sendMessage();">websocket</button>
+	</div>
 
 	<table class="table table-striped">
 		<tr>
@@ -48,6 +85,7 @@ var modBoard = function(seq) {
 		<tr>
 			<th>제목</th>
 			<td>
+				<input type="hidden" id="seq" name="seq" value="${boardVo.seq }" />
 				<input type="text" class="form-control" id="title" name="title" placeholder="제목 입력">
 			</td>
 		</tr>
@@ -84,10 +122,12 @@ var modBoard = function(seq) {
 							<td colspan="5">
 								<div id="accordion${item.seq }" class="collapse">
 									<c:out value="${item.content }" />
-									<input type="text" id="title${item.seq }" value="${item.title }" />
-									<textarea class="form-control" rows="5" id="content${item.seq }">${item.content }</textarea>
 								</div>
 							</td>
+						</tr>
+						<tr>
+							<input type="hidden" id="title${item.seq }" value="${item.title }" />
+							<textarea style="display: none;" class="form-control" rows="5" id="content${item.seq }">${item.content }</textarea>
 						</tr>
 					</c:forEach>
 				</c:when>
