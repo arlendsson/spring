@@ -30,7 +30,8 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
 	@Bean
 	public ClientDetailsService clientDetailsService() {
-		return new JdbcClientDetailsService(someDateSource);
+//		return new JdbcClientDetailsService(someDateSource);
+		return new JdbcClientDetailsService(null);
 	}
 
 	@Override
