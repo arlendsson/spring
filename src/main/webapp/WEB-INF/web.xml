@@ -23,7 +23,7 @@
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
-    	<!-- /WEB-INF/mybatis/mybatis-context.xml -->
+    	/WEB-INF/mybatis/mybatis-context.xml
     	/WEB-INF/dispatcher-servlet.xml
     	/WEB-INF/spring/message-context.xml
     	/WEB-INF/spring/security-context.xml

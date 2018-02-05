@@ -42,6 +42,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 			log.debug("########## loginUser : {}", loginUser.toString());
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new BadCredentialsException("Bad credentials - Search Login User");
 		}
 		
