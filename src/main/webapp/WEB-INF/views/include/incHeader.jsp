@@ -62,7 +62,7 @@ $(function () {
 </script>
 
 <style type="text/css">
-#titleBar li {	display: inline;	width:50%;	}
+#titleBar li {	display: inline;	width:50%;	height: 100%;	}
 </style>
 
 <title>코딩</title>
@@ -73,11 +73,13 @@ $(function () {
 	<li class="bg-primary">
 		<h4>코딩 연습</h4>
 	</li>
-	<c:if test="${sessionScope.loginUser != null }">
 	<li class="bg-primary">
-		<h4><c:out value="${sessionScope.loginUser.name }" /> 님</h4>
+		<h4>
+		&nbsp;
+		<c:if test="${sessionScope.loginUser != null }"><c:out value="${sessionScope.loginUser.name }" /></c:if>
+		&nbsp;님
+		</h4>
 	</li>
-	</c:if>
 </ul>
 
 <ul class="nav nav-tabs" id="menuBar">
