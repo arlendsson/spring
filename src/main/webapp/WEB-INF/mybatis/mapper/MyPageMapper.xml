@@ -22,10 +22,11 @@
 			, NAME
 		FROM USERS
 		WHERE ID = #{id}
+		<!-- 
 		<if test='pw != null and pw != ""'>
 		AND PW = #{pw}
 		</if>
-
+		 -->
 	</select>
 
 
