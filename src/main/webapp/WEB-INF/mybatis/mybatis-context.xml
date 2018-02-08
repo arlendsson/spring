@@ -34,10 +34,10 @@
 	 
 	 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
-		<property name="driverClass" value="${jdbc.oracle.driverClass}" />
-		<property name="url" value="${jdbc.oracle.url}" />
-		<property name="username" value="${jdbc.oracle.username}" />
-		<property name="password" value="${jdbc.oracle.password}" />
+		<property name="driverClass" value="${jdbc.mariadb.driverClass}" />
+		<property name="url"         value="${jdbc.mariadb.url}" />
+		<property name="username"    value="${jdbc.mariadb.username}" />
+		<property name="password"    value="${jdbc.mariadb.password}" />
     </bean>
      
 	
