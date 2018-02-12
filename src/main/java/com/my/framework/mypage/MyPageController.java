@@ -61,12 +61,13 @@ public class MyPageController {
 
 		log.debug(service.selectDual("지금은 "));
 
-		MyPageVo result = service.selectUser(new MyPageVo("test"));
+		MyPageVo result = service.selectUser(new MyPageVo(SessionUtil.getLoginUser(request.getSession()).getId()));
 
 		log.debug("########## name : " + result.getName());
+		log.debug("########## param.getCurPage() : " + param.getCurPage());
 
 		// TODO 페이징
-		BoardVo pagingParam = new BoardVo(service.selectBoardCount(param), param.getCurrentPage() > 0 ? param.getCurrentPage() : 1);
+		BoardVo pagingParam = new BoardVo(service.selectBoardCount(param), param.getCurPage() == 0 ? 1 : param.getCurPage());
 		log.debug("########## pagingParam : " + pagingParam.toString());
 
 		List<BoardVo> boardList = service.selectBoardList(pagingParam);

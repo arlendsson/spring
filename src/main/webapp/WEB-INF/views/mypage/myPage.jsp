@@ -8,7 +8,7 @@ $(document).ready(function() {
 
 	$("#saveBtn").click(function() {
 		var saveUrl = "/mypage/ajax/insertBoard";
-		if ($("#seq").val() != null && $("#seq").val() != '') {
+		if ($("#seq").val() != null && $("#seq").val() != '' && $("#seq").val() != '0') {
 			saveUrl = "/mypage/ajax/updateBoard";
 		}
 
@@ -19,7 +19,7 @@ $(document).ready(function() {
 			, type : 'POST'
 			, success : function (result) {
 				alert(JSON.stringify(result));
-				var data = JSON.parse(result);
+				
 				location.href = "/mypage/myPage";
 			}
 		});
@@ -27,7 +27,7 @@ $(document).ready(function() {
 });
 
 var goPage = function(page) {
-	$("#currentPage").val(page);
+	$("#curPage").val(page);
 	$("#boardForm").attr("method", "POST" );
 	$("#boardForm").attr("action", "/mypage/myPage" );
 	$("#boardForm").submit();
@@ -43,6 +43,7 @@ var modBoard = function(seq) {
 
 <script type="text/javascript">
 //http://nowonbun.tistory.com/285
+/*
 var webSocket = new WebSocket("ws://localhost/websocketTest");
 var messageTextArea = document.getElementById("messageTextArea");
 webSocket.onopen = function(message) {
@@ -63,6 +64,7 @@ function sendMessage() {
 	webSocket.send(message.value);
 	$("#messageTextArea").text("");
 }
+*/
 </script>
 
 
@@ -74,6 +76,8 @@ function sendMessage() {
 		<button type="button" id="wsBtn" onclick="javascript:sendMessage();">websocket</button>
 	</div>
 
+	<input type="text" name="curPage" id="curPage" value="${boardVo.curPage > 0 ? boardVo.curPage : 1 }" />
+	
 	<table class="table table-striped">
 		<tr>
 			<th>작성자</th>
@@ -105,7 +109,6 @@ function sendMessage() {
 </form:form>
 
 <form:form id="myForm">
-<input type="text" name="currentPage" id="currentPage" value="${boardVo.currentPage > 0 ? boardVo.currentPage : 1 }" />
 	<table class="table table-hover">
 		<tbody>
 			<c:choose>
