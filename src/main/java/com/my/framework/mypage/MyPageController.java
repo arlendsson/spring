@@ -80,10 +80,11 @@ public class MyPageController {
 
 	@RequestMapping("/ajax/data")
 	@ResponseBody
-	public MyPageVo data(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public MyPageVo data(HttpServletRequest request, HttpServletResponse response, MyPageVo param) throws Exception {
 		log.debug("########## " + request.getRequestURI());
+		log.debug("########## param.toString(): " + param.toString());
 
-		return new MyPageVo("hello");
+		return param;
 	}
 
 	@RequestMapping("/ajax/insertBoard")

@@ -173,12 +173,26 @@ $(function() {
 });
 </script>
 
+<script type="text/javascript">
+function ajaxData () {
+	alert($("#name").val());
+	$.ajax({
+		url : "/home/ajax/data"
+		, data : $("#testForm").serialize()
+		, processData : false
+		, type : 'POST'
+		, success : function (result) {
+			alert(JSON.stringify(result));
+		}
+	});
+}
+</script>
 
 <div>
-	<form action="">
-		<input type="button" onclick="javascript:send_message();" value="SEND" />
-		<input type="text" id="textID" name="message" />
-	</form>
+	<form:form id="testForm">
+		<input type="button" onclick="javascript:ajaxData();" value="SEND" />
+		<input type="text" id="name" name="name" value="<script>alert('xss test!');</script>" />
+	</form:form>
 </div>
 
 <div id="output"></div>
