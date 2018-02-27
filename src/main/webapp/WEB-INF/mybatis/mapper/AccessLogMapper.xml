@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="AccessLogMapper">
+	<insert id="insertAccessLog" parameterType="AccessLogVo">
+		/* mapper.insertAccessLog */
+		INSERT INTO access_log (
+		      signature_type_name
+		    , signature_name
+		    , acc_id
+		    , acc_ip
+		    , acc_date
+		) VALUES (
+		      #{signature_type_name, javaType=String, jdbcType=VARCHAR}
+		    , #{signature_name, javaType=String, jdbcType=VARCHAR}
+		    , #{acc_id, javaType=String, jdbcType=VARCHAR}
+		    , #{acc_ip, javaType=String, jdbcType=VARCHAR}
+		    , now()
+		)
+	</insert>
+</mapper>

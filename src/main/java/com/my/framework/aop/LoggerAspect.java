@@ -1,15 +1,28 @@
 package com.my.framework.aop;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.my.framework.util.SessionUtil;
 
 @Aspect
 @Component
 public class LoggerAspect {
+	@Autowired
+	private AccessLogWriter dao;
+	
+//	Controller 까지만 사용 가능
+//	@Autowired
+//	private HttpServletRequest req;
+	
 	protected Logger log = LoggerFactory.getLogger(getClass());
 	static String name = "";
 	static String type = "";
@@ -27,6 +40,8 @@ public class LoggerAspect {
 		}
 		
 		log.debug(name + type + "." + joinPoint.getSignature().getName() + "()");
+		
+		//dao.insertAccessLog(new AccessLogVo(joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName(), SessionUtil.getLoginUser(req.getSession()).getId(), req.getLocalAddr(), null));
 		
 		return joinPoint.proceed();
 	}

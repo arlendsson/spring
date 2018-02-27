@@ -35,8 +35,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		String user_id = (String) authentication.getPrincipal();
 		String user_pw = (String) authentication.getCredentials();
 		
-		user_id = "test";
-		user_pw = "1234";
+		//user_id = "test";
+		//user_pw = "1234";
 		
 		log.debug("########## CustomAuthenticationProvider.authenticate {}", user_id + " / " + user_pw);
 		
